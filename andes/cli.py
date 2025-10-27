@@ -47,6 +47,7 @@ def create_parser():
                                                              '[misc] misc. functions; '
                                                              '[prepare] prepare the numerical code; '
                                                              '[selftest] run self test; '
+                                                             '[mcp] start MCP server; '
                                         )
 
     run = sub_parsers.add_parser('run')
@@ -175,6 +176,12 @@ def create_parser():
 
     demo = sub_parsers.add_parser('demo')  # NOQA
 
+    mcp = sub_parsers.add_parser('mcp')
+    mcp.add_argument('action', choices=['run'], help='MCP server action')
+    mcp.add_argument('--http', action='store_true', help='Run with HTTP transport instead of STDIO')
+    mcp.add_argument('--host', default='0.0.0.0', help='Host to bind to (default: 0.0.0.0)')
+    mcp.add_argument('--port', type=int, default=8000, help='Port to bind to (default: 8000)')
+
     return parser
 
 
@@ -217,7 +224,7 @@ def main():
 
     module = importlib.import_module('andes.main')
 
-    if args.command in ('plot', 'doc', 'misc'):
+    if args.command in ('plot', 'doc', 'misc', 'mcp'):
         pass
     elif args.command == 'run' and args.no_preamble is True:
         pass
@@ -227,6 +234,18 @@ def main():
     # Run the command
     if args.command is None:
         parser.parse_args(sys.argv.append('--help'))
+
+    elif args.command == 'mcp':
+        # Handle MCP server command separately
+        from andes.mcp.server import mcp
+        print(f"Starting ANDES MCP Server...", file=sys.stderr)
+        if args.http:
+            print(f"HTTP mode: {args.host}:{args.port}", file=sys.stderr)
+            mcp.run(transport="http", host=args.host, port=args.port)
+        else:
+            print("STDIO mode (for Claude Desktop)", file=sys.stderr)
+            mcp.run()
+        return
 
     else:
         cmd = args.command
