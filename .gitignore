@@ -111,5 +111,8 @@ andes/pycode
 # testfile
 icebar
 
+# claude code
+.claude
+
 # example excel files cache
 ~$*.xlsx

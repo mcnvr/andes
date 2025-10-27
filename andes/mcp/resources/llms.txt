@@ -1,0 +1,180 @@
+# ANDES
+
+> ANDES (LTB ANDES) is an open-source Python library for power system modeling, computation, analysis, and control. It serves as the core simulation engine for CURENT's Large-scale Testbed (LTB), providing industry-grade power flow calculations, transient stability simulations, and small-signal stability analysis for transmission systems using a hybrid symbolic-numeric framework. Winner of the 2020 R&D 100 Award as part of the LTB platform.
+
+## About CURENT and LTB
+
+CURENT (Center for Ultra-Wide-Area Resilient Electric Energy Transmission Networks) is a graduated NSF Engineering Research Center jointly funded by the National Science Foundation and the U.S. Department of Energy, with over $18.5 million in initial investment. Based at the University of Tennessee, Knoxville, with partner institutions including Northeastern University, Rensselaer Polytechnic Institute, and Tuskegee University, CURENT is the first and only ERC devoted to power transmission systems.
+
+CURENT's mission envisions "a nation-wide or continent-wide transmission grid that is fully monitored and dynamically controlled in real-time" for improved efficiency and reliability. The center maintains partnerships with over 40 industry partners ranging from small start-ups to major utility companies, training the next generation of power systems engineering leaders with global perspectives.
+
+The CURENT Large-scale Testbed (LTB) is a state-of-the-art research facility and the first closed-loop platform of its kind to provide a virtual electric power grid for researchers to experiment with real-time controls and algorithms. LTB enables wide-area monitoring, modeling, control, and demonstration for power systems research. The platform integrates four independent but interoperable packages:
+
+- **ANDES**: Transient stability modeling and dynamic simulation
+- **AMS**: Scheduling modeling and market simulation
+- **DiME**: Distributed messaging environment for component communication
+- **AGVis**: Grid geographical visualization
+
+## ANDES Overview
+
+ANDES is designed for researchers, engineers, and students working with power system dynamics and control. The framework establishes a unique hybrid symbolic-numeric approach where a symbolic layer handles descriptive modeling using SymPy, while a numeric layer performs vector-based numerical computation. This approach enables automated equation generation, automatic differentiation for Jacobian construction, and efficient numerical computation.
+
+**Performance:** Despite being Python-based, ANDES can finish a 20-second transient simulation of a 2,000-bus system in just a few seconds on a typical desktop computer, demonstrating industry-grade performance.
+
+**Validation:** ANDES results have been validated against commercial tools including DSATools, TSAT, and PSS/E. Test results show perfect matching with TSAT for the NPCC 140-bus system and close alignment with both TSAT and PSS/E for the WECC 179-bus system.
+
+**Models:** ANDES includes commercial-grade dynamic models with all implementation details including limiters, saturation, zeroing time constants, and industry-grade second-generation renewable models (solar PV, Type 3 and Type 4 wind), distributed PV, and energy storage systems.
+
+Key capabilities include power flow analysis, time-domain simulation (TDS), eigenvalue analysis (small-signal stability), and extensive support for dynamic models including synchronous generators, renewable energy sources, exciters, governors, protection systems, and wide-area measurement-based control methods.
+
+**Applications:** ANDES supports research in controlled system separation, voltage stability assessment, damping control, frequency control, virtual inertia scheduling for inverter-based resources (IBRs), and deep/reinforcement learning applications in power systems. The platform is actively maintained and supported by ongoing NSF and DOE funding.
+
+**Interoperability:** ANDES provides seamless integration with other power system tools including PSS/E (RAW/DYR file compatibility), MATPOWER, pandapower, pypowsybl, and GridCal, enabling researchers to leverage existing workflows and datasets.
+
+## Getting Started
+
+- [Installation](https://docs.andes.app/en/latest/getting_started/install.html): Complete installation guide including pip, conda, and development setup
+- [Getting Started Index](https://docs.andes.app/en/latest/getting_started/index.html): Overview of package capabilities, tutorials, and configuration
+- [Command Line Interface](https://docs.andes.app/en/latest/getting_started/index.html#command-line-interface): Using ANDES CLI for running simulations and managing cases
+- [Scripting Basics](https://docs.andes.app/en/latest/getting_started/index.html#scripting): Writing Python scripts with ANDES
+- [Configuration](https://docs.andes.app/en/latest/getting_started/index.html#configuration): Format specifications and configuration reference
+- [Input Formats](https://docs.andes.app/en/latest/getting_started/index.html#input-formats): Support for XLSX, PSS/E RAW/DYR, MATPOWER, JSON, and disturbance files
+- [Test Cases](https://docs.andes.app/en/latest/getting_started/index.html#test-cases): Benchmark information and verification with IEEE test cases
+
+### Installation Methods
+
+**For pip users:**
+```bash
+pip install andes
+```
+
+**For conda users:**
+```bash
+conda install -c conda-forge andes
+```
+
+**For developers:**
+```bash
+git clone https://github.com/curent/andes
+cd andes
+pip install -e .
+```
+
+**Prerequisites:** Python 3.8 or later. New users should consider using Mambaforge for easier dependency management, especially on Windows and Apple Silicon.
+
+## Examples
+
+- [Examples Index](https://docs.andes.app/en/latest/examples/index.html): Overview of all scripting and interoperability examples
+- [Simulate and Plot](https://docs.andes.app/en/latest/examples/index.html#simulate-and-plot): Time-domain simulation with results export and visualization
+- [Working with Data](https://docs.andes.app/en/latest/examples/index.html#working-with-data): Loading systems from ANDES XLSX files and PSS/E formats
+- [Inspecting Models](https://docs.andes.app/en/latest/examples/index.html#inspecting-models): Examining model equations and documentation
+- [Eigenvalue Analysis](https://docs.andes.app/en/latest/examples/index.html#eigenvalue-analysis): Stability analysis with root loci plotting
+- [Batch Processing](https://docs.andes.app/en/latest/examples/index.html#batch-processing): Parallel simulations and case generation
+- [Load Frequency Control](https://docs.andes.app/en/latest/examples/index.html#load-frequency-control): Generator tripping and load compensation examples
+- [MATPOWER Interface](https://docs.andes.app/en/latest/examples/index.html#matpower): Converting to/from Octave/MATLAB formats
+- [pandapower Interface](https://docs.andes.app/en/latest/examples/index.html#pandapower): Network conversion and power flow comparison
+- [pypowsybl Interface](https://docs.andes.app/en/latest/examples/index.html#pypowsybl): Conversion and diagram generation
+
+## Development and Modeling
+
+- [Modeling Index](https://docs.andes.app/en/latest/modeling/index.html): Comprehensive guide to ANDES framework architecture and model development
+- [System Architecture](https://docs.andes.app/en/latest/modeling/system.html): Overview of System class, DAE storage, and code generation
+- [Group](https://docs.andes.app/en/latest/modeling/index.html#group): Understanding model groups and GroupBase methods
+- [Models](https://docs.andes.app/en/latest/modeling/index.html#models): ModelData, Model, ModelCache, and ModelCall classes
+- [Atomic Types](https://docs.andes.app/en/latest/modeling/index.html#atomic-types): Value providers and equation providers
+- [Parameters](https://docs.andes.app/en/latest/modeling/index.html#parameters): Parameter system implementation
+- [Variables](https://docs.andes.app/en/latest/modeling/index.html#variables): State, Algeb, ExtState, ExtAlgeb, and alias variables
+- [Services](https://docs.andes.app/en/latest/modeling/index.html#services): Constants, manipulators, flags, and events
+- [Discrete Components](https://docs.andes.app/en/latest/modeling/index.html#discrete): Limiters, comparers, and deadband elements
+- [Blocks](https://docs.andes.app/en/latest/modeling/index.html#blocks): Transfer functions, saturation, and naming conventions
+- [Model Examples](https://docs.andes.app/en/latest/modeling/index.html#examples): Practical implementations like TGOV1 and IEEEST
+
+### Key Concepts
+
+**Hybrid Symbolic-Numeric Framework:** ANDES uses SymPy to convert symbolic equations into executable Python code. This approach enables automatic differentiation for Jacobian generation and improved computational efficiency.
+
+**DAE Structure:** Power system dynamics are modeled as differential-algebraic equations (DAE):
+- Differential equations: `T·dx/dt = f(x, y)`
+- Algebraic equations: `0 = g(x, y)`
+
+**Decentralized Architecture:** Variables are initialized within individual models, collected into DAE arrays for solving, then distributed back to models—enabling modular model development.
+
+## Model Reference
+
+- [Model Reference](https://docs.andes.app/en/latest/modelref.html): Complete reference of 38 model groups with detailed documentation
+
+### Model Categories
+
+**AC System Models:** ACLine, ACShort, ACTopology (Bus)
+
+**DC System Models:** DCLink components (Ground, R, L, C, RCp, RCs, RLs, RLCs, RLCp), DCTopology (Node)
+
+**Generation:** StaticGen (PV, Slack), SynGen (GENCLS, GENROU, PLBVFU1), Motor (Motor3, Motor5)
+
+**Control Systems:**
+- Exciters: 16 model variants including EXDC2, ESDC2A, SEXS, IEEEX1, EXST1, ESST3A, ESAC1A, and more
+- Governors: 10 types including TGOV1, TGOV1DB, TGOV1N, HYGOV, IEEEG1, and GAST
+- Power System Stabilizers: IEEEST, ST2CUT
+
+**Renewable Energy:** RenGen, RenExciter, RenGovernor, RenPitch, RenTorque, RenAerodynamics, RenPlant
+
+**Measurement & Protection:** FreqMeasurement, PhasorMeasurement, DGProtection, PLL (PLL1, PLL2)
+
+**Additional Components:** DynLoad, TimedEvent, OutputSelect, Collection
+
+## API Reference
+
+- [API Reference](https://docs.andes.app/en/latest/api.html): Detailed API documentation for all modules and classes
+
+### Core API Modules
+
+**System Class:** Top-level orchestrator providing methods for `add()`, `init()`, `prepare()`, `connectivity()`, `summary()`, and more
+
+**Variables Package:** Classes for numerical DAE including State, Algeb, and extended variable types
+
+**Routines:**
+- Power Flow (PFlow): Steady-state power flow analysis
+- Time-Domain Simulation (TDS): Transient stability simulation
+- Eigenvalue Analysis (EIG): Small-signal stability analysis
+- DAE Integration: BackEuler, Trapezoid, and other integration methods
+
+**I/O Functionality:** Support for JSON, MATPOWER, PSS/E, and XLSX formats through dedicated parsers and formatters
+
+**Plotting:** Visualization tools including `tdsplot()` and `eig_plot()` functions, TDSData class
+
+**Interoperability:** Data exchange with GridCal, MATPOWER, Pandapower, and pypowsybl
+
+## Release Notes
+
+- [Release Notes](https://docs.andes.app/en/latest/release-notes.html): Version history and changelog
+
+**Current Version:** ANDES 1.9.3 (released 2025-01-05)
+
+**Recent Features:**
+- ConnMan class for connectivity management
+- NumPy 2.0 compatibility
+- CSV data loading during TDS initialization
+- Enhanced three-winding transformer parsing
+- New GroupBase methods: `get_all_idxes()`, `alter()`, `as_dict()`, `as_df()`
+
+**Note:** APIs before v3.0.0 are in beta and may change without prior notice.
+
+## Additional Resources
+
+- [GitHub Repository](https://github.com/CURENT/andes): Source code and development
+- [Issue Tracker](https://github.com/CURENT/andes/issues): Bug reports and feature requests
+- [Q&A Forum](https://github.com/CURENT/andes/discussions): Community discussions and support
+- [PyPI Package](https://pypi.org/project/andes/): Binary installer
+- [Interactive Notebooks](https://mybinder.org/v2/gh/curent/andes/master): Try ANDES in Jupyter without installation
+- [PDF Documentation (Stable)](https://docs.andes.app/_/downloads/en/stable/pdf/): Downloadable documentation
+- [PDF Documentation (Latest)](https://docs.andes.app/_/downloads/en/latest/pdf/): Development version documentation
+
+## Citation
+
+Research using ANDES should cite:
+"Hybrid Symbolic-Numeric Framework for Power System Modeling and Analysis," IEEE Transactions on Power Systems, 2021.
+
+## Optional
+
+- [LTB Repository](https://github.com/CURENT/): CURENT Large scale Testbed organization
+- [conda-forge Channel](https://anaconda.org/conda-forge/andes): Conda package distribution
